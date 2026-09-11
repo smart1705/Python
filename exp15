@@ -1,0 +1,81 @@
+students = {}
+def add_student():
+    roll_no = input("Enter Roll No: ")
+    name = input("Enter Student Name: ")
+    course = input("Enter Course: ")
+    students[roll_no] = {
+        "name": name,
+        "course": course
+    }
+    print("Student added successfully.")
+def search_student():
+    roll_no = input("Enter Roll No to search: ")
+    if roll_no in students:
+        print("Name:", students[roll_no]["name"])
+        print("Course:", students[roll_no]["course"])
+    else:
+        print("Student not found.")
+def update_student():
+    roll_no = input("Enter Roll No to update: ")
+    if roll_no in students:
+        name = input("Enter new name: ")
+        course = input("Enter new course: ")
+        students[roll_no]["name"] = name
+        students[roll_no]["course"] = course
+        print("Student updated successfully.")
+    else:
+        print("Student not found.")
+def delete_student():
+    roll_no = input("Enter Roll No to delete: ")
+    if roll_no in students:
+        del students[roll_no]
+        print("Student deleted successfully.")
+    else:
+        print("Student not found.")
+def display_students():
+    if not students:
+        print("No student records available.")
+        return
+    print("\n----- Student Records -----")
+    for roll_no, data in students.items():
+        print("Roll No :", roll_no)
+        print("Name    :", data["name"])
+        print("Course  :", data["course"])
+        print("--------------------------")
+def search_by_course():
+    course = input("Enter course to search: ")
+    found = False
+    print("\nStudents in", course, ":")
+    for roll_no, data in students.items():
+        if data["course"].lower() == course.lower():
+            print(roll_no, "-", data["name"])
+            found = True
+    if not found:
+        print("No students found for this course.")
+while True:
+    print("\n===== STUDENT DATA MANAGEMENT =====")
+    print("1. Add Student")
+    print("2. Search Student")
+    print("3. Update Student")
+    print("4. Delete Student")
+    print("5. Display Students")
+    print("6. Search by Course")
+    print("7. Exit")
+    choice = input("Enter your choice: ")
+    if choice == "1":
+        add_student()
+    elif choice == "2":
+        search_student()
+    elif choice == "3":
+        update_student()
+    elif choice == "4":
+        delete_student()
+    elif choice == "5":
+        display_students()
+    elif choice == "6":
+        search_by_course()
+    elif choice == "7":
+        print("Program terminated.")
+        break
+    else:
+        print("Invalid choice! Please try again.")
