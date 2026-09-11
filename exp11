@@ -1,0 +1,58 @@
+def enter_marks(subjects):
+    marks = []
+    for subject in subjects:
+        while True:
+            try:
+                mark = float(input("Enter marks for " + subject + " (0-100): "))
+                if 0 <= mark <= 100:
+                    marks.append(mark)
+                    break
+                else:
+                    print("Invalid marks! Enter marks between 0 and 100.")
+            except ValueError:
+                print("Please enter a valid number.")
+    return marks
+def calculate_total(marks):
+    return sum(marks)
+def calculate_percentage(total, number_of_subjects):
+    return total / number_of_subjects
+def calculate_grade(percentage):
+    if percentage >= 90:
+        return "A+"
+    elif percentage >= 80:
+        return "A"
+    elif percentage >= 70:
+        return "B+"
+    elif percentage >= 60:
+        return "B"
+    elif percentage >= 50:
+        return "C"
+    elif percentage >= 40:
+        return "D"
+    else:
+        return "F"
+def display_result(name, roll_no, subjects, marks, total, percentage, grade):
+    print("\n========== STUDENT RESULT ==========")
+    print("Name       :", name)
+    print("Roll No.   :", roll_no)
+    print("------------------------------------")
+    for i in range(len(subjects)):
+        print(subjects[i], ":", marks[i])
+    print("------------------------------------")
+    print("Total      :", total, "/", len(subjects) * 100)
+    print("Percentage :", percentage, "%")
+    print("Grade      :", grade)
+    if percentage >= 40:
+        print("Result     : PASS")
+    else:
+        print("Result     : FAIL")
+print("====================================")
+print("STUDENT RESULT PROCESSING SYSTEM")
+name = input("Enter student name: ")
+roll_no = input("Enter roll number: ")
+subjects = ["Python", "Java", "DBMS", "OS", "Web Technology"]
+marks = enter_marks(subjects)
+total = calculate_total(marks)
+percentage = calculate_percentage(total, len(subjects))
+grade = calculate_grade(percentage)
+display_result(name, roll_no, subjects, marks, total, percentage, grade)
