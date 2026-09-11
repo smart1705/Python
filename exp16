@@ -1,0 +1,59 @@
+menu = {}
+def add_item():
+    item = input("Enter food item: ")
+    price = float(input("Enter price: "))
+    menu[item] = price
+    print("Item added successfully.")
+def display_items():
+    if not menu:
+        print("Menu is empty.")
+    else:
+        print("\n----- FOOD MENU -----")
+        for item, price in menu.items():
+            print(item, ":", price)
+        print("---------------------")
+def search_item():
+    item = input("Enter item to search: ")
+    if item in menu:
+        print(item, "is available. Price:", menu[item])
+    else:
+        print("Item not found.")
+def update_price():
+    item = input("Enter item to update: ")
+    if item in menu:
+        price = float(input("Enter new price: "))
+        menu[item] = price
+        print("Price updated successfully.")
+    else:
+        print("Item not found.")
+def remove_item():
+    item = input("Enter item to remove: ")
+    if item in menu:
+        del menu[item]
+        print("Item removed successfully.")
+    else:
+        print("Item not found.")
+while True:
+    print("\n===== FOOD MENU MANAGEMENT =====")
+    print("1. Add Item")
+    print("2. Display Items")
+    print("3. Search Item")
+    print("4. Update Price")
+    print("5. Remove Item")
+    print("6. Exit")
+    choice = input("Enter your choice: ")
+    if choice == "1":
+        add_item()
+    elif choice == "2":
+        display_items()
+    elif choice == "3":
+        search_item()
+    elif choice == "4":
+        update_price()
+    elif choice == "5":
+        remove_item()
+    elif choice == "6":
+        print("Program terminated.")
+        break
+    else:
+        print("Invalid choice! Please try again.")
