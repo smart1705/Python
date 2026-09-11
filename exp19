@@ -1,0 +1,57 @@
+menu = {
+    "Pizza": 250,
+    "Burger": 120,
+    "Pasta": 180,
+    "Sandwich": 100,
+    "Coffee": 80,
+    "Biryani": 220
+}
+while True:
+    print("\n===== FOOD SEARCH AND SORTING =====")
+    print("1. Search by Name")
+    print("2. Search by Price Range")
+    print("3. Sort by Price")
+    print("4. Find Cheapest")
+    print("5. Find Most Expensive")
+    print("6. Display All Items")
+    print("7. Exit")
+    choice = input("Enter your choice: ")
+    if choice == "1":
+        name = input("Enter food name: ")
+        if name in menu:
+            print(name, "is available at Rs.", menu[name])
+        else:
+            print("Food item not found.")
+    elif choice == "2":
+        minimum = float(input("Enter minimum price: "))
+        maximum = float(input("Enter maximum price: "))
+        print("\nItems in price range:")
+        found = False
+        for item, price in menu.items():
+            if minimum <= price <= maximum:
+                print(item, ":", price)
+                found = True
+        if not found:
+            print("No items found in this price range.")
+    elif choice == "3":
+        sorted_menu = sorted(menu.items(), key=lambda x: x[1])
+        print("\n----- ITEMS SORTED BY PRICE -----")
+        for item, price in sorted_menu:
+            print(item, ":", price)
+    elif choice == "4":
+        cheapest = min(menu, key=menu.get)
+        print("\nCheapest Item:")
+        print(cheapest, ":", menu[cheapest])
+    elif choice == "5":
+        expensive = max(menu, key=menu.get)
+        print("\nMost Expensive Item:")
+        print(expensive, ":", menu[expensive])
+    elif choice == "6":
+        print("\n----- FOOD MENU -----")
+        for item, price in menu.items():
+            print(item, ":", price)
+    elif choice == "7":
+        print("Program terminated.")
+        break
+    else:
+        print("Invalid choice!")
