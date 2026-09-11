@@ -1,0 +1,41 @@
+names = []
+n = int(input("Enter number of students: "))
+for i in range(n):
+    name = input("Enter student name: ").strip()
+    if name == "":
+        print("Invalid name!")
+    else:
+        names.append(name)
+print("\nStudent Names:")
+for name in names:
+    print(name)
+search = input("\nEnter name to search: ").strip()
+if search.lower() in [name.lower() for name in names]:
+    print("Name found.")
+else:
+    print("Name not found.")
+name1 = input("\nEnter first name for comparison: ").strip()
+name2 = input("Enter second name for comparison: ").strip()
+if name1.lower() == name2.lower():
+    print("Both names are same.")
+else:
+    print("Names are different.")
+print("\nFormatted Names:")
+for name in names:
+    print(name.title())
+name = input("\nEnter a name to count characters: ").strip()
+print("Number of characters:", len(name))
+full_name = input("\nEnter full name: ").strip()
+parts = full_name.split()
+print("Name Components:")
+for part in parts:
+    print(part)
+valid = True
+for char in full_name:
+    if not (char.isalpha() or char.isspace()):
+        valid = False
+        break
+if valid and full_name != "":
+    print("Name is valid.")
+else:
+    print("Name is invalid.")
