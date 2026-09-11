@@ -1,0 +1,76 @@
+order = {}
+def add_item():
+    item = input("Enter item name: ")
+    price = float(input("Enter item price: "))
+    quantity = int(input("Enter quantity: "))
+    order[item] = {
+        "price": price,
+        "quantity": quantity
+    }
+    print("Item added successfully.")
+def remove_item():
+    item = input("Enter item to remove: ")
+    if item in order:
+        del order[item]
+        print("Item removed successfully.")
+    else:
+        print("Item not found.")
+def calculate_bill():
+    total = 0
+    for item, details in order.items():
+        total += details["price"] * details["quantity"]
+    return total
+def apply_discount(total):
+    if total >= 1000:
+        discount = total * 0.10
+    elif total >= 500:
+        discount = total * 0.05
+    else:
+        discount = 0
+    final_amount = total - discount
+    return discount, final_amount
+def display_order():
+    if not order:
+        print("Order is empty.")
+        return
+    print("\n----- ORDER DETAILS -----")
+    for item, details in order.items():
+        cost = details["price"] * details["quantity"]
+        print(item)
+        print("Price    :", details["price"])
+        print("Quantity :", details["quantity"])
+        print("Cost     :", cost)
+        print("------------------------")
+    total = calculate_bill()
+    discount, final_amount = apply_discount(total)
+    print("Total Bill :", total)
+    print("Discount   :", discount)
+    print("Final Bill :", final_amount)
+while True:
+    print("\n===== ORDER PROCESSING =====")
+    print("1. Add Item")
+    print("2. Remove Item")
+    print("3. Calculate Bill")
+    print("4. Apply Discount")
+    print("5. Display Order")
+    print("6. Exit")
+    choice = input("Enter your choice: ")
+    if choice == "1":
+        add_item()
+    elif choice == "2":
+        remove_item()
+    elif choice == "3":
+        total = calculate_bill()
+        print("Total Bill:", total)
+    elif choice == "4":
+        total = calculate_bill()
+        discount, final_amount = apply_discount(total)
+        print("Discount:", discount)
+        print("Final Amount:", final_amount)
+    elif choice == "5":
+        display_order()
+    elif choice == "6":
+        print("Thank you!")
+        break
+    else:
+        print("Invalid choice!")
