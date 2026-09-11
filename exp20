@@ -1,0 +1,111 @@
+menu = {
+    "Pizza": 250,
+    "Burger": 120,
+    "Pasta": 180,
+    "Sandwich": 100,
+    "Biryani": 220,
+    "Coffee": 80
+}
+cart = {}
+def display_menu():
+    print("\n----- FOOD MENU -----")
+    for item, price in menu.items():
+        print(item, ":", "Rs.", price)
+def search_food():
+    item = input("Enter food name to search: ")
+    if item in menu:
+        print(item, "is available at Rs.", menu[item])
+    else:
+        print("Food item not found.")
+def add_to_cart():
+    item = input("Enter food item: ")
+    if item in menu:
+        quantity = int(input("Enter quantity: "))
+        if quantity > 0:
+            cart[item] = cart.get(item, 0) + quantity
+            print("Item added to cart.")
+        else:
+            print("Quantity must be greater than 0.")
+    else:
+        print("Food item not available.")
+def remove_from_cart():
+    item = input("Enter item to remove: ")
+    if item in cart:
+        del cart[item]
+        print("Item removed from cart.")
+    else:
+        print("Item not found in cart.")
+def view_cart():
+    if not cart:
+        print("\nCart is empty.")
+        return
+    print("\n----- YOUR CART -----")
+    for item, quantity in cart.items():
+        cost = menu[item] * quantity
+        print(item, "x", quantity, "=", "Rs.", cost)
+def calculate_bill():
+    total = 0
+    for item, quantity in cart.items():
+        total += menu[item] * quantity
+    return total
+def apply_discount(total):
+    if total >= 1000:
+        discount = total * 0.10
+    elif total >= 500:
+        discount = total * 0.05
+    else:
+        discount = 0
+    return discount
+def place_order():
+    if not cart:
+        print("Cart is empty. Add items first.")
+        return
+    total = calculate_bill()
+    discount = apply_discount(total)
+    final_amount = total - discount
+    print("\n========== ORDER BILL ==========")
+    view_cart()
+    print("--------------------------------")
+    print("Total Bill :", "Rs.", total)
+    print("Discount   :", "Rs.", discount)
+    print("Final Bill :", "Rs.", final_amount)
+    print("--------------------------------")
+    print("Order placed successfully!")
+    print("Thank you for ordering!")
+    print("================================")
+while True:
+    print("\n===== COMPLETE FOOD ORDERING SYSTEM =====")
+    print("1. Display Menu")
+    print("2. Search Food")
+    print("3. Add to Cart")
+    print("4. Remove from Cart")
+    print("5. View Cart")
+    print("6. Calculate Bill")
+    print("7. Apply Discount")
+    print("8. Place Order")
+    print("9. Exit")
+    choice = input("Enter your choice: ")
+    if choice == "1":
+        display_menu()
+    elif choice == "2":
+        search_food()
+    elif choice == "3":
+        add_to_cart()
+    elif choice == "4":
+        remove_from_cart()
+    elif choice == "5":
+        view_cart()
+    elif choice == "6":
+        total = calculate_bill()
+        print("Total Bill: Rs.", total)
+    elif choice == "7":
+        total = calculate_bill()
+        discount = apply_discount(total)
+        print("Discount: Rs.", discount)
+    elif choice == "8":
+        place_order()
+    elif choice == "9":
+        print("Program terminated.")
+        break
+    else:
+        print("Invalid choice! Please try again.")
