@@ -1,0 +1,50 @@
+menu = {
+    "Pizza": 250,
+    "Burger": 120,
+    "Pasta": 180,
+    "Sandwich": 100,
+    "Coffee": 80
+}
+cart = {}
+while True:
+    print("\n===== SHOPPING CART =====")
+    print("1. View Menu")
+    print("2. Select Item")
+    print("3. View Cart")
+    print("4. Calculate Total")
+    print("5. Exit")
+    choice = input("Enter your choice: ")
+    if choice == "1":
+        print("\n----- FOOD MENU -----")
+        for item, price in menu.items():
+            print(item, ":", price)
+    elif choice == "2":
+        item = input("Enter food item: ")
+        if item in menu:
+            quantity = int(input("Enter quantity: "))
+            if quantity > 0:
+                cart[item] = quantity
+                print("Item added to cart.")
+            else:
+                print("Quantity must be greater than 0.")
+        else:
+            print("Item not available.")
+    elif choice == "3":
+        if not cart:
+            print("Cart is empty.")
+        else:
+            print("\n----- YOUR CART -----")
+            for item, quantity in cart.items():
+                cost = menu[item] * quantity
+                print(item, "x", quantity, "=", cost)
+    elif choice == "4":
+        total = 0
+        for item, quantity in cart.items():
+            cost = menu[item] * quantity
+            total = total + cost
+        print("Total Amount:", total)
+    elif choice == "5":
+        print("Thank you for shopping!")
+        break
+    else:
+        print("Invalid choice!")
