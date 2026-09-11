@@ -1,0 +1,49 @@
+def calculate_total(marks, n):
+    if n == 0:
+        return 0
+    return marks[n - 1] + calculate_total(marks, n - 1)
+def calculate_percentage(total, subjects):
+    return total / (subjects * 100) * 100
+print("STUDENT ACADEMIC RESULT")
+name = input("Enter student name: ")
+roll_no = input("Enter roll number: ")
+subjects = ["Python", "Java", "DBMS", "Operating System", "Web Technology"]
+marks = []
+for subject in subjects:
+    while True:
+        try:
+            mark = float(input("Enter marks in " + subject + " (0-100): "))
+            if 0 <= mark <= 100:
+                marks.append(mark)
+                break
+            else:
+                print("Enter marks between 0 and 100.")
+        except ValueError:
+            print("Enter a valid number.")
+total = calculate_total(marks, len(marks))
+percentage = calculate_percentage(total, len(subjects))
+print("\n========== RESULT ==========")
+print("Name       :", name)
+print("Roll No.   :", roll_no)
+print("Total      :", total, "/", len(subjects) * 100)
+print("Percentage :", percentage, "%")
+if percentage >= 90:
+    grade = "A+"
+elif percentage >= 80:
+    grade = "A"
+elif percentage >= 70:
+    grade = "B+"
+elif percentage >= 60:
+    grade = "B"
+elif percentage >= 50:
+    grade = "C"
+elif percentage >= 40:
+    grade = "D"
+else:
+    grade = "F"
+print("Grade    :", grade)
+if percentage >= 40:
+    print("Result     : PASS")
+else:
+    print("Result     : FAIL")
+print("============================")
