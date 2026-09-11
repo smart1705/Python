@@ -1,0 +1,37 @@
+marks = {}
+n = int(input("Enter number of students: "))
+for i in range(n):
+    name = input("Enter student name: ")
+    mark = float(input("Enter marks: "))
+    marks[name] = mark
+print("\nMarks:", marks)
+name = input("\nEnter student name to update: ")
+if name in marks:
+    new_mark = float(input("Enter new marks: "))
+    marks[name] = new_mark
+    print("Marks updated successfully.")
+else:
+    print("Student not found.")
+name = input("\nEnter student name to remove: ")
+if name in marks:
+    del marks[name]
+    print("Student removed successfully.")
+else:
+    print("Student not found.")
+sorted_marks = dict(sorted(marks.items(), key=lambda x: x[1], reverse=True))
+print("\nSorted Marks:")
+for name, mark in sorted_marks.items():
+    print(name, ":", mark)
+if marks:
+    highest = max(marks.values())
+    lowest = min(marks.values())
+    print("\nHighest Marks:", highest)
+    print("Lowest Marks:", lowest)
+    average = sum(marks.values()) / len(marks)
+    print("Average Marks:", average)
+    print("\nTop Performer(s):")
+    for name, mark in marks.items():
+        if mark == highest:
+            print(name, ":", mark)
+else:
+    print("\nNo student records available.")
