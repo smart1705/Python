@@ -1,0 +1,34 @@
+class Student:
+    def work(self):
+        print("Student studies and attends classes.")
+    def display(self):
+        print("Type: Student")
+        self.work()
+class Faculty:
+    def work(self):
+        print("Faculty teaches students and conducts lectures.")
+    def display(self):
+        print("Type: Faculty")
+        self.work()
+class Staff:
+    def work(self):
+        print("Staff manages office and administrative work.")
+    def display(self):
+        print("Type: Staff")
+        self.work()
+print("===== PERSONNEL MANAGEMENT =====")
+print("\n1. Student")
+print("2. Faculty")
+print("3. Staff")
+choice = int(input("\nEnter your choice: "))
+if choice == 1:
+    person = Student()
+    person.display()
+elif choice == 2:
+    person = Faculty()
+    person.display()
+elif choice == 3:
+    person = Staff()
+    person.display()
+else:
+    print("Invalid choice.")
