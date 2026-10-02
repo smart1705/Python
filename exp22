@@ -1,0 +1,25 @@
+class Student:
+    def __init__(self, name, roll_no):
+        self.name = name
+        self.roll_no = roll_no
+        self.courses = []
+    def add_course(self, course):
+        self.courses.append(course)
+    def display(self):
+        print("\nStudent Name:", self.name)
+        print("Roll No:", self.roll_no)
+        print("Courses:", self.courses)
+class Course:
+    def __init__(self, course_name):
+        self.course_name = course_name
+course1 = Course("Python")
+course2 = Course("Data Structures")
+course3 = Course("DBMS")
+student1 = Student("Tanisha", 101)
+student2 = Student("Priya", 102)
+student1.add_course(course1.course_name)
+student1.add_course(course2.course_name)
+student2.add_course(course1.course_name)
+student2.add_course(course3.course_name)
+student1.display()
+student2.display()
