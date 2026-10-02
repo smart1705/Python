@@ -1,0 +1,25 @@
+class Personnel:
+    def __init__(self, name, category, age):
+        self.name = name
+        self.category = category
+        self.age = age
+    def display(self):
+        print("\n--- Personnel Information ---")
+        print("Name:", self.name)
+        print("Category:", self.category)
+        print("Age:", self.age)
+    def behaviour(self):
+        if self.category.lower() == "student":
+            print("Behaviour: Student attends classes and studies.")
+        elif self.category.lower() == "faculty":
+            print("Behaviour: Faculty teaches students.")
+        elif self.category.lower() == "staff":
+            print("Behaviour: Staff manages college work.")
+        else:
+            print("Invalid category.")
+name = input("Enter name: ")
+category = input("Enter category (Student/Faculty/Staff): ")
+age = int(input("Enter age: "))
+person = Personnel(name, category, age)
+person.display()
+person.behaviour()
