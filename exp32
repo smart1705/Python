@@ -1,0 +1,100 @@
+# Experiment 32: Attendance Management
+
+FILENAME = "attendance.txt"
+ATTENDANCE_LIMIT = 75
+
+
+def add_record():
+    roll_no = input("Enter Roll Number: ")
+    name = input("Enter Student Name: ")
+    attendance = float(input("Enter Attendance Percentage: "))
+
+    if attendance < 0 or attendance > 100:
+        print("Invalid attendance percentage!")
+        return
+
+    if attendance >= ATTENDANCE_LIMIT:
+        status = "Regular"
+    else:
+        status = "Low Attendance"
+
+    with open(FILENAME, "a") as file:
+        file.write(f"{roll_no},{name},{attendance},{status}\n")
+
+    print("Attendance record added successfully.")
+
+
+def display_records():
+    try:
+        with open(FILENAME, "r") as file:
+            records = file.readlines()
+
+            if not records:
+                print("No records found.")
+                return
+
+            print("\n--- Attendance Records ---")
+            print("Roll No\tName\tAttendance\tStatus")
+
+            for record in records:
+                roll_no, name, attendance, status = record.strip().split(",")
+                print(f"{roll_no}\t{name}\t{attendance}%\t\t{status}")
+
+    except FileNotFoundError:
+        print("No attendance file found.")
+
+
+def low_attendance_report():
+    try:
+        with open(FILENAME, "r") as file:
+            records = file.readlines()
+
+            print("\n--- Low Attendance Report ---")
+            found = False
+
+            for record in records:
+                roll_no, name, attendance, status = record.strip().split(",")
+
+                if float(attendance) < ATTENDANCE_LIMIT:
+                    print(
+                        f"Roll No: {roll_no}, "
+                        f"Name: {name}, "
+                        f"Attendance: {attendance}%"
+                    )
+                    found = True
+
+            if not found:
+                print("No students have low attendance.")
+
+    except FileNotFoundError:
+        print("No attendance file found.")
+
+
+def main():
+    while True:
+        print("\n===== ATTENDANCE MANAGEMENT SYSTEM =====")
+        print("1. Add Attendance Record")
+        print("2. Display All Records")
+        print("3. Generate Low Attendance Report")
+        print("4. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            add_record()
+
+        elif choice == "2":
+            display_records()
+
+        elif choice == "3":
+            low_attendance_report()
+
+        elif choice == "4":
+            print("Program terminated.")
+            break
+
+        else:
+            print("Invalid choice! Please try again.")
+
+
+main()
