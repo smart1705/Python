@@ -1,0 +1,120 @@
+# Complete Banking System
+
+account = None
+balance = 0
+transactions = []
+
+while True:
+
+    print("\n===== BANKING SYSTEM =====")
+    print("1. Create Account")
+    print("2. Deposit")
+    print("3. Withdraw")
+    print("4. Balance Enquiry")
+    print("5. Calculate Interest")
+    print("6. Display Account")
+    print("7. Transaction History")
+    print("8. Close Account")
+    print("9. Exit")
+
+    choice = int(input("Enter your choice: "))
+
+    # 1. Create Account
+    if choice == 1:
+        if account is not None:
+            print("Account already exists.")
+        else:
+            name = input("Enter your name: ")
+            account = input("Enter account number: ")
+            balance = float(input("Enter initial deposit: "))
+
+            transactions.append("Account created")
+            print("Account created successfully!")
+
+    # 2. Deposit
+    elif choice == 2:
+        if account is None:
+            print("Please create an account first.")
+        else:
+            amount = float(input("Enter deposit amount: "))
+
+            if amount > 0:
+                balance += amount
+                transactions.append("Deposited: Rs.", amount)
+                print("Amount deposited successfully.")
+            else:
+                print("Invalid amount.")
+
+    # 3. Withdraw
+    elif choice == 3:
+        if account is None:
+            print("Please create an account first.")
+        else:
+            amount = float(input("Enter withdrawal amount: "))
+
+            if amount <= 0:
+                print("Invalid amount.")
+            elif amount > balance:
+                print("Insufficient balance.")
+            else:
+                balance -= amount
+                transactions.append("Withdrawn: Rs.", amount)
+                print("Amount withdrawn successfully.")
+
+    # 4. Balance Enquiry
+    elif choice == 4:
+        if account is None:
+            print("Please create an account first.")
+        else:
+            print("Current Balance: Rs.", balance)
+
+    # 5. Calculate Interest
+    elif choice == 5:
+        if account is None:
+            print("Please create an account first.")
+        else:
+            rate = 5
+            interest = balance * rate / 100
+            print("Interest at 5%:", interest)
+            print("Balance after interest:", balance + interest)
+
+    # 6. Display Account
+    elif choice == 6:
+        if account is None:
+            print("Please create an account first.")
+        else:
+            print("\n--- Account Details ---")
+            print("Name:", name)
+            print("Account Number:", account)
+            print("Balance: Rs.", balance)
+
+    # 7. Transaction History
+    elif choice == 7:
+        if account is None:
+            print("Please create an account first.")
+        else:
+            print("\n--- Transaction History ---")
+
+            if len(transactions) == 0:
+                print("No transactions.")
+            else:
+                for transaction in transactions:
+                    print(transaction)
+
+    # 8. Close Account
+    elif choice == 8:
+        if account is None:
+            print("No account exists.")
+        else:
+            account = None
+            balance = 0
+            transactions = []
+            print("Account closed successfully.")
+
+    # 9. Exit
+    elif choice == 9:
+        print("Thank you for using the Banking System.")
+        break
+
+    else:
+        print("Invalid choice. Please try again.")
