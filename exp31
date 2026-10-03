@@ -1,0 +1,74 @@
+# Student Persistent Records
+
+FILE = "students.txt"
+
+
+def create_record():
+    name = input("Enter student name: ")
+    roll_no = input("Enter roll number: ")
+    marks = input("Enter marks: ")
+
+    file = open(FILE, "a")
+    file.write(roll_no + "," + name + "," + marks + "\n")
+    file.close()
+
+    print("Record created successfully.")
+
+
+def read_records():
+    try:
+        file = open(FILE, "r")
+
+        print("\n--- Student Records ---")
+
+        for line in file:
+            data = line.strip().split(",")
+
+            print("Roll No:", data[0])
+            print("Name:", data[1])
+            print("Marks:", data[2])
+            print("-------------------")
+
+        file.close()
+
+    except FileNotFoundError:
+        print("No records found.")
+
+
+def add_record():
+    create_record()
+
+
+def display_records():
+    read_records()
+
+
+while True:
+
+    print("\n===== STUDENT RECORD SYSTEM =====")
+    print("1. Create Record")
+    print("2. Read Records")
+    print("3. Add Record")
+    print("4. Display Records")
+    print("5. Exit")
+
+    choice = int(input("Enter your choice: "))
+
+    if choice == 1:
+        create_record()
+
+    elif choice == 2:
+        read_records()
+
+    elif choice == 3:
+        add_record()
+
+    elif choice == 4:
+        display_records()
+
+    elif choice == 5:
+        print("Program ended.")
+        break
+
+    else:
+        print("Invalid choice.")
