@@ -1,0 +1,57 @@
+class Account:
+    def __init__(self, name, account_no, balance):
+        self.name = name
+        self.account_no = account_no
+        self.balance = balance
+
+    def display(self):
+        print("\nName:", self.name)
+        print("Account No:", self.account_no)
+        print("Balance: Rs.", self.balance)
+
+
+class SavingsAccount(Account):
+    def withdraw(self, amount):
+        if amount <= self.balance:
+            self.balance = self.balance - amount
+            print("Withdrawal successful.")
+        else:
+            print("Insufficient balance.")
+
+
+class CurrentAccount(Account):
+    def withdraw(self, amount):
+        if amount <= self.balance + 1000:
+            self.balance = self.balance - amount
+            print("Withdrawal successful.")
+        else:
+            print("Withdrawal limit exceeded.")
+
+
+print("===== BANK ACCOUNT SYSTEM =====")
+print("1. Savings Account")
+print("2. Current Account")
+
+choice = int(input("Enter account type: "))
+
+name = input("Enter customer name: ")
+account_no = input("Enter account number: ")
+balance = float(input("Enter initial balance: "))
+
+if choice == 1:
+    account = SavingsAccount(name, account_no, balance)
+
+elif choice == 2:
+    account = CurrentAccount(name, account_no, balance)
+
+else:
+    print("Invalid account type.")
+    exit()
+
+account.display()
+
+amount = float(input("\nEnter amount to withdraw: "))
+account.withdraw(amount)
+
+print("\nAfter withdrawal:")
+account.display()
