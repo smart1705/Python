@@ -1,56 +1,71 @@
-class Customer:
-    def __init__(self, name, customer_id):
+class Student:
+    def __init__(self, name, roll_no):
         self.name = name
-        self.customer_id = customer_id
-class Account:
-    def __init__(self, account_no, customer, balance):
-        self.account_no = account_no
-        self.customer = customer
-        self.balance = balance
-    def deposit(self, amount):
-        if amount > 0:
-            self.balance = self.balance + amount
-            print("Amount deposited successfully.")
-        else:
-            print("Invalid amount.")
-    def withdraw(self, amount):
-        if amount > 0 and amount <= self.balance:
-            self.balance = self.balance - amount
-            print("Amount withdrawn successfully.")
-        else:
-            print("Insufficient balance or invalid amount.")
+        self.roll_no = roll_no
+
     def display(self):
-        print("\n--- Account Details ---")
-        print("Customer Name:", self.customer.name)
-        print("Customer ID:", self.customer.customer_id)
-        print("Account Number:", self.account_no)
-        print("Balance: Rs.", self.balance)
-name = input("Enter customer name: ")
-customer_id = input("Enter customer ID: ")
-customer = Customer(name, customer_id)
-account_no = input("Enter account number: ")
-balance = float(input("Enter initial balance: "))
-account = Account(account_no, customer, balance)
+        print("Student Name:", self.name)
+        print("Roll No:", self.roll_no)
+
+
+class Faculty:
+    def __init__(self, name, subject):
+        self.name = name
+        self.subject = subject
+
+    def display(self):
+        print("Faculty Name:", self.name)
+        print("Subject:", self.subject)
+
+
+class Course:
+    def __init__(self, course_name):
+        self.course_name = course_name
+
+    def display(self):
+        print("Course:", self.course_name)
+
+
+# Create objects
+student = Student("Tanisha", 101)
+faculty = Faculty("Rahul", "Python")
+course = Course("M.Sc. Computer Applications")
+
+
 while True:
-    print("\n===== BANK ACCOUNT MANAGEMENT =====")
-    print("1. Deposit")
-    print("2. Withdraw")
-    print("3. Balance Enquiry")
-    print("4. Account Display")
+    print("\n===== COLLEGE MANAGEMENT SYSTEM =====")
+    print("1. Student Management")
+    print("2. Faculty Management")
+    print("3. Course Management")
+    print("4. Search")
     print("5. Exit")
+
     choice = int(input("Enter your choice: "))
+
     if choice == 1:
-        amount = float(input("Enter deposit amount: "))
-        account.deposit(amount)
+        print("\n--- Student Management ---")
+        student.display()
+
     elif choice == 2:
-        amount = float(input("Enter withdrawal amount: "))
-        account.withdraw(amount)
+        print("\n--- Faculty Management ---")
+        faculty.display()
+
     elif choice == 3:
-        print("Current Balance: Rs.", account.balance)
+        print("\n--- Course Management ---")
+        course.display()
+
     elif choice == 4:
-        account.display()
+        print("\n--- Search ---")
+        search = input("Enter student name: ")
+
+        if search.lower() == student.name.lower():
+            student.display()
+        else:
+            print("Student not found.")
+
     elif choice == 5:
         print("Thank you!")
         break
+
     else:
         print("Invalid choice.")
