@@ -1,0 +1,59 @@
+from storage import load_data, save_data, enter_text, enter_whole_number
+from student import search_student
+
+FILE_NAME = "attendance35.json"
+
+
+def record_attendance():
+    while True:
+        roll_no = enter_text("Enter roll number: ")
+        student = search_student(roll_no)
+
+        if student is not None:
+            break
+
+        print("Student not found. Add the student first or try again.")
+
+    while True:
+        attended = enter_whole_number("Enter classes attended: ")
+        total = enter_whole_number("Enter total classes: ")
+
+        if attended > total:
+            print("Error: Attended classes cannot exceed total classes.")
+        else:
+            break
+
+    records = load_data(FILE_NAME, {})
+
+    if records is None:
+        return
+
+    records[roll_no] = {
+        "attended": attended,
+        "total": total
+    }
+
+    if save_data(FILE_NAME, records):
+        print("Attendance saved successfully.")
+
+
+def get_attendance(roll_no):
+    records = load_data(FILE_NAME, {})
+
+    if records is None or roll_no not in records:
+        return None
+
+    attended = records[roll_no]["attended"]
+    total = records[roll_no]["total"]
+
+    if total == 0:
+        percentage = 0
+    else:
+        percentage = attended / total * 100
+
+    if percentage < 75:
+        status = "Low Attendance"
+    else:
+        status = "Satisfactory"
+
+    return percentage, status
