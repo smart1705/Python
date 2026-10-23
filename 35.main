@@ -1,0 +1,57 @@
+from storage import enter_text
+from student import add_student, search_student, display_students
+from result import enter_result
+from attendance import record_attendance
+from report import generate_report
+
+
+def main():
+    while True:
+        print("\n===== COLLEGE MANAGEMENT SYSTEM =====")
+        print("1. Add Student")
+        print("2. Search Student")
+        print("3. Display Students")
+        print("4. Enter Student Result")
+        print("5. Record Attendance")
+        print("6. Generate Student Report")
+        print("7. Exit")
+
+        choice = input("Enter your choice: ").strip()
+
+        if choice == "1":
+            add_student()
+
+        elif choice == "2":
+            roll_no = enter_text("Enter roll number: ")
+            student = search_student(roll_no)
+
+            if student is None:
+                print("Student not found.")
+            else:
+                print("\nRoll Number:", student["roll_no"])
+                print("Name:", student["name"])
+                print("Course:", student["course"])
+
+        elif choice == "3":
+            display_students()
+
+        elif choice == "4":
+            enter_result()
+
+        elif choice == "5":
+            record_attendance()
+
+        elif choice == "6":
+            generate_report()
+
+        elif choice == "7":
+            print("College Management System closed.")
+            break
+
+        else:
+            print("Invalid choice. Try again.")
+
+
+if __name__ == "__main__":
+    main()s
+
