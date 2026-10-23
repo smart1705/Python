@@ -1,0 +1,40 @@
+from storage import enter_text
+from student import search_student
+from result import get_result
+from attendance import get_attendance
+
+
+def generate_report():
+    while True:
+        roll_no = enter_text("Enter roll number: ")
+        student = search_student(roll_no)
+
+        if student is not None:
+            break
+
+        print("Student not found. Try again.")
+
+    print("\n===== STUDENT REPORT =====")
+    print("Roll Number:", student["roll_no"])
+    print("Name:", student["name"])
+    print("Course:", student["course"])
+
+    result = get_result(roll_no)
+
+    if result is None:
+        print("Result: Not entered")
+    else:
+        marks, status = result
+        print("Marks:", marks)
+        print("Result Status:", status)
+
+    attendance = get_attendance(roll_no)
+
+    if attendance is None:
+        print("Attendance: Not recorded")
+    else:
+        percentage, status = attendance
+        print("Attendance:", round(percentage, 2), "%")
+        print("Attendance Status:", status)
+
+    print("==========================")
