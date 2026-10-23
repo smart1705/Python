@@ -1,0 +1,133 @@
+from storage import load_data, save_data, enter_text
+
+BOOK_FILE = "books40.json"
+MEMBER_FILE = "members40.json"
+TRANSACTION_FILE = "transactions40.json"
+
+
+def issue_book():
+    books = load_data(BOOK_FILE)
+    members = load_data(MEMBER_FILE)
+    transactions = load_data(TRANSACTION_FILE)
+
+    if books is None or members is None or transactions is None:
+        return
+
+    if not books:
+        print("No books available.")
+        return
+
+    if not members:
+        print("No members registered.")
+        return
+
+    while True:
+        book_id = enter_text("Enter Book ID: ")
+        book = None
+
+        for item in books:
+            if item["Book ID"] == book_id:
+                book = item
+                break
+
+        if book is not None:
+            break
+
+        print("Book not found. Try again.")
+
+    if not book["Available"]:
+        print("Book is already issued!")
+        return
+
+    while True:
+        member_id = enter_text("Enter Member ID: ")
+        member_found = False
+
+        for member in members:
+            if member["Member ID"] == member_id:
+                member_found = True
+                break
+
+        if member_found:
+            break
+
+        print("Member not found. Try again.")
+
+    book["Available"] = False
+    book["Member ID"] = member_id
+
+    transactions.append({
+        "Book ID": book_id,
+        "Member ID": member_id,
+        "Status": "Issued"
+    })
+
+    if not save_data(BOOK_FILE, books):
+        return
+
+    if save_data(TRANSACTION_FILE, transactions):
+        print("Book issued successfully!")
+
+
+def return_book():
+    books = load_data(BOOK_FILE)
+    transactions = load_data(TRANSACTION_FILE)
+
+    if books is None or transactions is None:
+        return
+
+    if not books:
+        print("No books available.")
+        return
+
+    while True:
+        book_id = enter_text("Enter Book ID to return: ")
+        book = None
+
+        for item in books:
+            if item["Book ID"] == book_id:
+                book = item
+                break
+
+        if book is not None:
+            break
+
+        print("Book not found. Try again.")
+
+    if book["Available"]:
+        print("Book is not currently issued!")
+        return
+
+    member_id = book["Member ID"]
+
+    book["Available"] = True
+    book["Member ID"] = ""
+
+    for transaction in reversed(transactions):
+        if (
+            transaction["Book ID"] == book_id
+            and transaction["Status"] == "Issued"
+        ):
+            transaction["Status"] = "Returned"
+            break
+
+    if not save_data(BOOK_FILE, books):
+        return
+
+    if save_data(TRANSACTION_FILE, transactions):
+        print("Book returned successfully!")
+        print("Previously issued to:", member_id)
+
+
+def display_transactions():
+    transactions = load_data(TRANSACTION_FILE)
+
+    if transactions is None:
+        return
+
+    if not transactions:
+        print("No transactions available.")
+        return
+
+    for transaction in transactions:
+        print(transaction)
