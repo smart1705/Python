@@ -1,0 +1,118 @@
+import books
+import members
+import transactions
+import reports
+
+
+def book_menu():
+    while True:
+        print("\n--- Book Management ---")
+        print("1. Add Book")
+        print("2. Search Book")
+        print("3. Update Book")
+        print("4. Display Books")
+        print("5. Back")
+
+        choice = input("Enter choice: ").strip()
+
+        if choice == "1":
+            books.add_book()
+        elif choice == "2":
+            books.search_book()
+        elif choice == "3":
+            books.update_book()
+        elif choice == "4":
+            books.display_books()
+        elif choice == "5":
+            break
+        else:
+            print("Invalid choice! Try again.")
+
+
+def member_menu():
+    while True:
+        print("\n--- Member Management ---")
+        print("1. Add Member")
+        print("2. Search Member")
+        print("3. Update Member")
+        print("4. Display Members")
+        print("5. Back")
+
+        choice = input("Enter choice: ").strip()
+
+        if choice == "1":
+            members.add_member()
+        elif choice == "2":
+            members.search_member()
+        elif choice == "3":
+            members.update_member()
+        elif choice == "4":
+            members.display_members()
+        elif choice == "5":
+            break
+        else:
+            print("Invalid choice! Try again.")
+
+
+def report_menu():
+    while True:
+        print("\n--- Library Reports ---")
+        print("1. Available Books")
+        print("2. Issued Books")
+        print("3. Books by Category")
+        print("4. Books by Member")
+        print("5. Total Books")
+        print("6. All Transactions")
+        print("7. Back")
+
+        choice = input("Enter choice: ").strip()
+
+        if choice == "1":
+            reports.available_books()
+        elif choice == "2":
+            reports.issued_books()
+        elif choice == "3":
+            reports.books_by_category()
+        elif choice == "4":
+            reports.books_by_member()
+        elif choice == "5":
+            reports.total_books()
+        elif choice == "6":
+            transactions.display_transactions()
+        elif choice == "7":
+            break
+        else:
+            print("Invalid choice! Try again.")
+
+
+def main():
+    while True:
+        print("\n=== Library Management System ===")
+        print("1. Book Management")
+        print("2. Member Management")
+        print("3. Issue Book")
+        print("4. Return Book")
+        print("5. Reports")
+        print("6. Exit")
+
+        choice = input("Enter choice: ").strip()
+
+        if choice == "1":
+            book_menu()
+        elif choice == "2":
+            member_menu()
+        elif choice == "3":
+            transactions.issue_book()
+        elif choice == "4":
+            transactions.return_book()
+        elif choice == "5":
+            report_menu()
+        elif choice == "6":
+            print("Thank you for using the Library System!")
+            break
+        else:
+            print("Invalid choice! Please try again.")
+
+
+if __name__ == "__main__":
+    main()
