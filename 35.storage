@@ -1,0 +1,75 @@
+import json
+import os
+
+
+def load_data(file_name, default_data):
+    if not os.path.exists(file_name):
+        if save_data(file_name, default_data):
+            return default_data.copy()
+
+        return None
+
+    try:
+        with open(file_name, "r") as file:
+            data = json.load(file)
+
+        if not isinstance(data, type(default_data)):
+            print("Error: Invalid data format in", file_name)
+            return None
+
+        return data
+
+    except (json.JSONDecodeError, OSError):
+        print("Error reading file:", file_name)
+        return None
+
+
+def save_data(file_name, data):
+    try:
+        with open(file_name, "w") as file:
+            json.dump(data, file, indent=4)
+
+        return True
+
+    except OSError:
+        print("Error saving file:", file_name)
+        return False
+
+
+def enter_text(message):
+    while True:
+        text = input(message).strip()
+
+        if text:
+            return text
+        else:
+            print("Error: This field cannot be empty.")
+
+
+def enter_marks(message):
+    while True:
+        try:
+            marks = float(input(message))
+
+            if 0 <= marks <= 100:
+                return marks
+            else:
+                print("Error: Marks must be between 0 and 100.")
+
+        except ValueError:
+            print("Error: Enter valid numeric marks.")
+
+
+def enter_whole_number(message, minimum=0):
+    while True:
+        try:
+            number = int(input(message))
+
+            if number >= minimum:
+                return number
+            else:
+                print("Error: Enter a number greater than or equal to", minimum)
+
+        except ValueError:
+            print("Error: Enter a valid whole number.")
+
