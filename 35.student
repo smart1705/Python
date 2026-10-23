@@ -1,0 +1,62 @@
+student.py
+from storage import load_data, save_data, enter_text
+
+FILE_NAME = "students35.json"
+
+def add_student():
+    students = load_data(FILE_NAME, [])
+
+    if students is None:
+        return
+
+    while True:
+        roll_no = enter_text("Enter roll number: ")
+
+        if any(student["roll_no"] == roll_no for student in students):
+            print("Error: Roll number already exists.")
+        else:
+            break
+
+    name = enter_text("Enter student name: ")
+    course = enter_text("Enter course: ")
+
+    record = {
+        "roll_no": roll_no,
+        "name": name,
+        "course": course
+    }
+
+    students.append(record)
+
+    if save_data(FILE_NAME, students):
+        print("Student added successfully.")
+
+
+def search_student(roll_no):
+    students = load_data(FILE_NAME, [])
+
+    if students is None:
+        return None
+
+    for student in students:
+        if student["roll_no"] == roll_no:
+            return student
+
+    return None
+
+
+def display_students():
+    students = load_data(FILE_NAME, [])
+
+    if students is None:
+        return
+
+    if not students:
+        print("No student records found.")
+        return
+
+    for student in students:
+        print("\nRoll Number:", student["roll_no"])
+        print("Name:", student["name"])
+        print("Course:", student["course"])
+
