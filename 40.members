@@ -1,0 +1,93 @@
+from storage import load_data, save_data, enter_text
+
+FILE_NAME = "members40.json"
+
+
+def add_member():
+    members = load_data(FILE_NAME)
+
+    if members is None:
+        return
+
+    while True:
+        member_id = enter_text("Enter Member ID: ")
+
+        if any(member["Member ID"] == member_id for member in members):
+            print("Error: Member ID already exists!")
+        else:
+            break
+
+    name = enter_text("Enter Name: ")
+    course = enter_text("Enter Course: ")
+    phone = enter_text("Enter Phone: ")
+    email = enter_text("Enter Email: ")
+
+    member = {
+        "Member ID": member_id,
+        "Name": name,
+        "Course": course,
+        "Phone": phone,
+        "Email": email
+    }
+
+    members.append(member)
+
+    if save_data(FILE_NAME, members):
+        print("Member added successfully!")
+
+
+def search_member():
+    members = load_data(FILE_NAME)
+
+    if members is None:
+        return
+
+    member_id = enter_text("Enter Member ID: ")
+
+    for member in members:
+        if member["Member ID"] == member_id:
+            print(member)
+            return
+
+    print("Member not found!")
+
+
+def update_member():
+    members = load_data(FILE_NAME)
+
+    if members is None:
+        return
+
+    member_id = enter_text("Enter Member ID to update: ")
+
+    for member in members:
+        if member["Member ID"] == member_id:
+            name = enter_text("Enter new Name: ")
+            course = enter_text("Enter new Course: ")
+            phone = enter_text("Enter new Phone: ")
+            email = enter_text("Enter new Email: ")
+
+            member["Name"] = name
+            member["Course"] = course
+            member["Phone"] = phone
+            member["Email"] = email
+
+            if save_data(FILE_NAME, members):
+                print("Member updated successfully!")
+            return
+
+    print("Member not found!")
+
+
+def display_members():
+    members = load_data(FILE_NAME)
+
+    if members is None:
+        return
+
+    if not members:
+        print("No members available.")
+        return
+
+    for member in members:
+        print(member)
