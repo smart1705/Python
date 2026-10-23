@@ -1,0 +1,91 @@
+from storage import load_data, save_data, enter_text
+
+FILE_NAME = "books40.json"
+
+
+def add_book():
+    books = load_data(FILE_NAME)
+
+    if books is None:
+        return
+
+    while True:
+        book_id = enter_text("Enter Book ID: ")
+
+        if any(book["Book ID"] == book_id for book in books):
+            print("Error: Book ID already exists!")
+        else:
+            break
+
+    title = enter_text("Enter Title: ")
+    author = enter_text("Enter Author: ")
+    category = enter_text("Enter Category: ")
+
+    book = {
+        "Book ID": book_id,
+        "Title": title,
+        "Author": author,
+        "Category": category,
+        "Available": True,
+        "Member ID": ""
+    }
+
+    books.append(book)
+
+    if save_data(FILE_NAME, books):
+        print("Book added successfully!")
+
+
+def search_book():
+    books = load_data(FILE_NAME)
+
+    if books is None:
+        return
+
+    book_id = enter_text("Enter Book ID: ")
+
+    for book in books:
+        if book["Book ID"] == book_id:
+            print(book)
+            return
+
+    print("Book not found!")
+
+
+def update_book():
+    books = load_data(FILE_NAME)
+
+    if books is None:
+        return
+
+    book_id = enter_text("Enter Book ID to update: ")
+
+    for book in books:
+        if book["Book ID"] == book_id:
+            title = enter_text("Enter new Title: ")
+            author = enter_text("Enter new Author: ")
+            category = enter_text("Enter new Category: ")
+
+            book["Title"] = title
+            book["Author"] = author
+            book["Category"] = category
+
+            if save_data(FILE_NAME, books):
+                print("Book updated successfully!")
+            return
+
+    print("Book not found!")
+
+
+def display_books():
+    books = load_data(FILE_NAME)
+
+    if books is None:
+        return
+
+    if not books:
+        print("No books available.")
+        return
+
+    for book in books:
+        print(book)
