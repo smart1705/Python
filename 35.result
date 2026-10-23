@@ -1,0 +1,44 @@
+from storage import load_data, save_data, enter_text, enter_marks
+from student import search_student
+
+FILE_NAME = "results35.json"
+
+
+def enter_result():
+    while True:
+        roll_no = enter_text("Enter roll number: ")
+        student = search_student(roll_no)
+
+        if student is not None:
+            break
+
+        print("Student not found. Add the student first or try again.")
+
+    marks = enter_marks("Enter marks (0-100): ")
+
+    results = load_data(FILE_NAME, {})
+
+    if results is None:
+        return
+
+    results[roll_no] = marks
+
+    if save_data(FILE_NAME, results):
+        print("Result saved successfully.")
+
+
+def get_result(roll_no):
+    results = load_data(FILE_NAME, {})
+
+    if results is None or roll_no not in results:
+        return None
+
+    marks = results[roll_no]
+
+    if marks >= 40:
+        status = "Pass"
+    else:
+        status = "Fail"
+
+    return marks, status
+
