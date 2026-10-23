@@ -1,0 +1,85 @@
+from storage import load_data, enter_text
+
+FILE_NAME = "books40.json"
+
+
+def available_books():
+    books = load_data(FILE_NAME)
+
+    if books is None:
+        return
+
+    found = False
+    print("\n--- Available Books ---")
+
+    for book in books:
+        if book["Available"]:
+            print(book)
+            found = True
+
+    if not found:
+        print("No available books found.")
+
+
+def issued_books():
+    books = load_data(FILE_NAME)
+
+    if books is None:
+        return
+
+    found = False
+    print("\n--- Issued Books ---")
+
+    for book in books:
+        if not book["Available"]:
+            print(book)
+            found = True
+
+    if not found:
+        print("No issued books found.")
+
+
+def books_by_category():
+    books = load_data(FILE_NAME)
+
+    if books is None:
+        return
+
+    category = enter_text("Enter Category: ")
+    found = False
+
+    for book in books:
+        if book["Category"].casefold() == category.casefold():
+            print(book)
+            found = True
+
+    if not found:
+        print("No books found in this category.")
+
+
+def books_by_member():
+    books = load_data(FILE_NAME)
+
+    if books is None:
+        return
+
+    member_id = enter_text("Enter Member ID: ")
+    found = False
+
+    for book in books:
+        if (
+            not book["Available"]
+            and book["Member ID"].casefold() == member_id.casefold()
+        ):
+            print(book)
+            found = True
+
+    if not found:
+        print("No books issued to this member.")
+
+
+def total_books():
+    books = load_data(FILE_NAME)
+
+    if books is not None:
+        print("Total number of books:", len(books))
