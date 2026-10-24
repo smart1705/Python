@@ -1,0 +1,240 @@
+students = {}
+
+
+# Module 1: Student Management
+
+def add_student():
+    student_id = input("Enter student ID: ").strip()
+
+    if not student_id:
+        print("Student ID cannot be empty.")
+        return
+
+    if student_id in students:
+        print("Student ID already exists.")
+        return
+
+    name = input("Enter student name: ").strip()
+
+    if not name or not any(ch.isalpha() for ch in name):
+        print("Enter a valid student name.")
+        return
+
+    students[student_id] = {
+        "name": name,
+        "marks": None,
+        "attendance": None
+    }
+
+    print("Student added successfully.")
+
+
+def search_student():
+    student_id = input("Enter student ID: ").strip()
+
+    if student_id not in students:
+        print("Student not found.")
+        return
+
+    print("Student ID:", student_id)
+    print("Student Name:", students[student_id]["name"])
+
+
+def display_students():
+    if not students:
+        print("No student records available.")
+        return
+
+    for student_id, details in students.items():
+        print("Student ID:", student_id)
+        print("Student Name:", details["name"])
+        print("--------------------")
+
+
+# Module 2: Result Management
+
+def enter_marks():
+    student_id = input("Enter student ID: ").strip()
+
+    if student_id not in students:
+        print("Student not found.")
+        return
+
+    try:
+        subject_count = int(input("Enter number of subjects: "))
+
+        if subject_count <= 0:
+            print("Number of subjects must be positive.")
+            return
+
+        marks = []
+
+        for i in range(subject_count):
+            mark = float(input("Enter marks for subject " + str(i + 1) + ": "))
+
+            if mark < 0 or mark > 100:
+                print("Marks must be between 0 and 100.")
+                return
+
+            marks.append(mark)
+
+        students[student_id]["marks"] = marks
+        print("Marks recorded successfully.")
+
+    except ValueError:
+        print("Invalid input. Enter numbers only.")
+
+
+def display_result():
+    student_id = input("Enter student ID: ").strip()
+
+    if student_id not in students:
+        print("Student not found.")
+        return
+
+    marks = students[student_id]["marks"]
+
+    if marks is None:
+        print("Marks have not been recorded.")
+        return
+
+    total = sum(marks)
+    percentage = total / len(marks)
+
+    print("Student Name:", students[student_id]["name"])
+    print("Subject Marks:", marks)
+    print("Total Marks:", total)
+    print("Percentage:", percentage, "%")
+
+    if all(mark >= 35 for mark in marks):
+        print("Result: Pass")
+    else:
+        print("Result: Fail")
+
+
+# Module 3: Attendance Management
+
+def record_attendance():
+    student_id = input("Enter student ID: ").strip()
+
+    if student_id not in students:
+        print("Student not found.")
+        return
+
+    try:
+        total_classes = int(input("Enter total classes: "))
+        attended_classes = int(input("Enter classes attended: "))
+
+        if total_classes <= 0:
+            print("Total classes must be greater than zero.")
+            return
+
+        if attended_classes < 0 or attended_classes > total_classes:
+            print("Attended classes must be between 0 and total classes.")
+            return
+
+        students[student_id]["attendance"] = (
+            attended_classes, total_classes
+        )
+
+        print("Attendance recorded successfully.")
+
+    except ValueError:
+        print("Invalid input. Enter whole numbers only.")
+
+
+def display_attendance(student_id):
+    attendance = students[student_id]["attendance"]
+
+    if attendance is None:
+        print("Attendance has not been recorded.")
+        return
+
+    attended, total = attendance
+    percentage = attended / total * 100
+
+    print("Classes Attended:", attended)
+    print("Total Classes:", total)
+    print("Attendance Percentage:", percentage, "%")
+
+
+# Module 4: Report Management
+
+def generate_report():
+    student_id = input("Enter student ID: ").strip()
+
+    if student_id not in students:
+        print("Student not found.")
+        return
+
+    student = students[student_id]
+
+    print("\n--- STUDENT REPORT ---")
+    print("Student ID:", student_id)
+    print("Student Name:", student["name"])
+
+    if student["marks"] is None:
+        print("Result: Marks not recorded.")
+    else:
+        marks = student["marks"]
+        total = sum(marks)
+        percentage = total / len(marks)
+
+        print("Marks:", marks)
+        print("Total Marks:", total)
+        print("Percentage:", percentage, "%")
+
+        if all(mark >= 35 for mark in marks):
+            print("Result: Pass")
+        else:
+            print("Result: Fail")
+
+    display_attendance(student_id)
+
+
+# Main Module
+
+def main():
+    while True:
+        print("\n--- COLLEGE MANAGEMENT SYSTEM ---")
+        print("1. Add Student")
+        print("2. Search Student")
+        print("3. Display All Students")
+        print("4. Enter Student Marks")
+        print("5. Display Result")
+        print("6. Record Attendance")
+        print("7. Generate Student Report")
+        print("8. Exit")
+
+        choice = input("Enter your choice: ").strip()
+
+        if choice == "1":
+            add_student()
+
+        elif choice == "2":
+            search_student()
+
+        elif choice == "3":
+            display_students()
+
+        elif choice == "4":
+            enter_marks()
+
+        elif choice == "5":
+            display_result()
+
+        elif choice == "6":
+            record_attendance()
+
+        elif choice == "7":
+            generate_report()
+
+        elif choice == "8":
+            print("Exiting College Management System.")
+            break
+
+        else:
+            print("Invalid choice. Enter a number from 1 to 8.")
+
+
+main()
