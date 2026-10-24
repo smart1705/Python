@@ -1,0 +1,196 @@
+books = {}
+members = {}
+issued_books = {}
+
+
+# Module 1: Book Management
+
+def add_book():
+    book_id = input("Enter book ID: ").strip()
+
+    if not book_id:
+        print("Book ID cannot be empty.")
+        return
+
+    if book_id in books:
+        print("Book ID already exists.")
+        return
+
+    title = input("Enter book title: ").strip()
+    author = input("Enter author name: ").strip()
+
+    if not title or not author:
+        print("Title and author cannot be empty.")
+        return
+
+    try:
+        quantity = int(input("Enter number of copies: "))
+
+        if quantity <= 0:
+            print("Quantity must be greater than zero.")
+            return
+
+    except ValueError:
+        print("Enter a valid whole number.")
+        return
+
+    books[book_id] = {
+        "title": title,
+        "author": author,
+        "quantity": quantity
+    }
+
+    print("Book added successfully.")
+
+
+def display_books():
+    if not books:
+        print("No books available.")
+        return
+
+    for book_id, book in books.items():
+        print("Book ID:", book_id)
+        print("Title:", book["title"])
+        print("Author:", book["author"])
+        print("Available Copies:", book["quantity"])
+        print("--------------------")
+
+
+# Module 2: Member Management
+
+def add_member():
+    member_id = input("Enter member ID: ").strip()
+
+    if not member_id:
+        print("Member ID cannot be empty.")
+        return
+
+    if member_id in members:
+        print("Member already exists.")
+        return
+
+    name = input("Enter member name: ").strip()
+
+    if not name or not any(ch.isalpha() for ch in name):
+        print("Enter a valid member name.")
+        return
+
+    members[member_id] = name
+    print("Member added successfully.")
+
+
+def display_members():
+    if not members:
+        print("No members registered.")
+        return
+
+    for member_id, name in members.items():
+        print("Member ID:", member_id)
+        print("Member Name:", name)
+        print("--------------------")
+
+
+# Module 3: Issue and Return Books
+
+def issue_book():
+    book_id = input("Enter book ID: ").strip()
+    member_id = input("Enter member ID: ").strip()
+
+    if book_id not in books:
+        print("Book not found.")
+        return
+
+    if member_id not in members:
+        print("Member not found.")
+        return
+
+    if books[book_id]["quantity"] <= 0:
+        print("No copies available.")
+        return
+
+    if member_id in issued_books and book_id in issued_books[member_id]:
+        print("This member has already issued this book.")
+        return
+
+    if member_id not in issued_books:
+        issued_books[member_id] = []
+
+    issued_books[member_id].append(book_id)
+    books[book_id]["quantity"] -= 1
+
+    print("Book issued successfully.")
+
+
+def return_book():
+    book_id = input("Enter book ID: ").strip()
+    member_id = input("Enter member ID: ").strip()
+
+    if member_id not in issued_books:
+        print("This member has no issued books.")
+        return
+
+    if book_id not in issued_books[member_id]:
+        print("This book was not issued to this member.")
+        return
+
+    issued_books[member_id].remove(book_id)
+    books[book_id]["quantity"] += 1
+
+    print("Book returned successfully.")
+
+
+# Module 4: Reports
+
+def display_issued_books():
+    found = False
+
+    for member_id, book_list in issued_books.items():
+        for book_id in book_list:
+            found = True
+            print("Member:", members[member_id])
+            print("Book:", books[book_id]["title"])
+            print("--------------------")
+
+    if not found:
+        print("No books are currently issued.")
+
+
+# Main Module
+
+def main():
+    while True:
+        print("\n--- LIBRARY MANAGEMENT SYSTEM ---")
+        print("1. Add Book")
+        print("2. Display Books")
+        print("3. Add Member")
+        print("4. Display Members")
+        print("5. Issue Book")
+        print("6. Return Book")
+        print("7. Issued Books Report")
+        print("8. Exit")
+
+        choice = input("Enter your choice: ").strip()
+
+        if choice == "1":
+            add_book()
+        elif choice == "2":
+            display_books()
+        elif choice == "3":
+            add_member()
+        elif choice == "4":
+            display_members()
+        elif choice == "5":
+            issue_book()
+        elif choice == "6":
+            return_book()
+        elif choice == "7":
+            display_issued_books()
+        elif choice == "8":
+            print("Library Management System closed.")
+            break
+        else:
+            print("Invalid choice. Enter a number from 1 to 8.")
+
+
+main()
+
